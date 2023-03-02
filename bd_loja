@@ -1,0 +1,76 @@
+create database bd_modelagem;
+use bd_modelagem;
+
+create table tb_cliente(
+id_cliente int,
+nm_cliente varchar(50),
+nr_telefone varchar(12),
+nm_email varchar(45),
+primary key(id_cliente)
+);
+
+create table tb_categoria(
+id_categoria int,
+nm_categoria varchar(45),
+primary key(id_categoria)
+);
+
+create table tb_fornecedor(
+id_fornecedor int,
+nr_cnpj varchar(45),
+nm_fornecedor varchar(60),
+primary key(id_fornecedor)
+);
+
+create table tb_vendedor(
+id_vendedor int,
+nm_vendedor varchar(45),
+primary key(id_vendedor)
+);
+
+create table tb_pagamento(
+id_pagamento int,
+ds_forma_pagamento varchar(20),
+primary key(id_pagamento)
+);
+
+create table tb_venda(
+id_venda int,
+vl_total_venda decimal(10,2),
+dt_venda datetime,
+fk_id_cliente int,
+fk_id_vendedor int,
+fk_id_pagamento int,
+primary key (id_venda),
+foreign key (fk_id_cliente) references
+tb_cliente(id_cliente),
+foreign key (fk_id_vendedor) references
+tb_vendedor(id_vendedor),
+foreign key (fk_id_pagamento) references
+tb_pagamento(id_pagamento)
+);
+
+create table tb_produto(
+id_produto int,
+nm_produto varchar(45),
+vl_produto decimal(10,2),
+qtd_estoque varchar(45),
+fk_id_categoria int,
+fk_id_fornecedor int,
+primary key (id_produto),
+foreign key (fk_id_categoria) references
+tb_categoria(id_categoria),
+foreign key (fk_id_fornecedor) references
+tb_fornecedor(id_fornecedor)
+);
+
+create table tb_venda_has_produto(
+cd_venda_produto int auto_increment,
+fk_id_venda int,
+fk_id_produto int,
+primary key (cd_venda_produto),
+foreign key (fk_id_venda) references
+tb_venda(id_venda),
+foreign key (fk_id_produto) references
+tb_produto(id_produto)
+);
